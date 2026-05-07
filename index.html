@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palpites do Dia - Futebol</title>
+    <title>Palpites MZ - Palpites de Futebol</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background: #0f172a; color: #fff; padding: 20px; }
         .container { max-width: 700px; margin: 0 auto; }
         header { text-align: center; margin-bottom: 20px; }
-        h1 { color: #22c55e; font-size: 2rem; margin-bottom: 5px; }
+        .logo { width: 120px; margin: 0 auto 10px; display: block; }
+        h1 { color: #22c55e; font-size: 1.8rem; margin-bottom: 5px; }
         .data { color: #94a3b8; font-size: 0.9rem; }
         .tabs { display: flex; gap: 10px; margin: 20px 0; }
         .tab-btn {
@@ -40,6 +41,18 @@
             text-decoration: none; font-weight: bold; display: block; text-align: center;
             margin-top: 12px;
         }
+        .pagamento {
+            background: #0f172a; border: 2px solid #22c55e; padding: 16px;
+            border-radius: 8px; margin-top: 12px;
+        }
+        .pagamento h3 { color: #22c55e; margin-bottom: 12px; font-size: 1.1rem; }
+        .metodo { 
+            background: #1e293b; padding: 12px; border-radius: 6px; 
+            margin-bottom: 10px; font-size: 0.9rem;
+        }
+        .metodo:last-child { margin: 0; }
+        .metodo strong { color: #cbd5e1; }
+        .valor { font-size: 1.3rem; font-weight: bold; color: #22c55e; margin-bottom: 12px; }
         .senha-box { 
             background: #0f172a; border: 2px dashed #ca8a04; padding: 15px; 
             border-radius: 8px; margin: 15px 0; text-align: center;
@@ -55,104 +68,4 @@
         .palpite-oculto { display: none; }
         .aviso { 
             background: #7f1d1d; padding: 12px; border-radius: 8px; 
-            margin: 20px 0; font-size: 0.85rem; text-align: center;
-        }
-        footer { text-align: center; margin-top: 40px; color: #64748b; font-size: 0.8rem; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Palpites do Dia</h1>
-            <div class="data" id="dataHoje">quinta-feira, 7 de maio de 2026</div>
-        </header>
-
-        <div class="aviso">
-            ⚠️ Aposte com confiança. Palpites certeiro, garantia de ganho. +18
-        </div>
-
-        <div class="tabs">
-            <button class="tab-btn tab-gratis" onclick="mostrarTab('gratis')">Palpites Grátis</button>
-            <button class="tab-btn tab-vip" onclick="mostrarTab('vip')">Palpites VIP 💎</button>
-        </div>
-
-        <!-- ABA PALPITES GRÁTIS -->
-        <div id="gratis" class="tab-content active">
-            <div class="jogo">
-                <div class="times">Real Madrid vs Barcelona</div>
-                <div class="hora-liga">21:00 | La Liga</div>
-                <div class="palpite">Palpite: Ambas Marcam - Sim</div>
-                <div class="analise">Clássico com média de 3 gols nos últimos 5 jogos. Defesas falhando.</div>
-            </div>
-        </div>
-
-        <!-- ABA PALPITES VIP/PAGOS -->
-        <div id="vip" class="tab-content">
-            <div class="jogo vip">
-                <div class="times">Jogo VIP 1 - Odd 2.10</div>
-                <div class="hora-liga">Liga oculta | Análise completa</div>
-                
-                <!-- ÁREA BLOQUEADA -->
-                <div id="bloqueado1">
-                    <div class="palpite vip">🔒 Palpite Bloqueado</div>
-                    <div class="analise">Jogo com 100% de taxa de acerto no nosso grupo VIP. Info exclusiva de desfalques.</div>
-                    
-                    <div class="senha-box">
-                        <p>Já pagou? Digite a senha enviada no WhatsApp:</p>
-                        <input type="text" id="senha1" class="senha-input" placeholder="Senha do dia">
-                        <br>
-                        <button class="btn-desbloquear" onclick="desbloquear(1)">Desbloquear Palpite</button>
-                        <p id="erro1" style="color:#f87171;margin-top:8px;display:none;">Senha incorreta!</p>
-                    </div>
-
-                    <a href="https://wa.me/258852319663?text=Olá!%20Quero%20comprar%20o%20Palpite%20VIP%20de%20hoje.%20Qual%20o%20valor?" 
-                       class="btn-whatsapp" target="_blank">
-                       💰 Comprar Palpite VIP no WhatsApp
-                    </a>
-                </div>
-
-                <!-- ÁREA QUE APARECE DEPOIS DA SENHA -->
-                <div id="desbloqueado1" class="palpite-oculto">
-                    <div class="palpite vip">Palpite: Manchester City -1.5 Handicap</div>
-                    <div class="analise">City em casa é imbatível. Adversário sem 3 titulares. Odd 2.10 na 1xBet.</div>
-                    <div style="color:#22c55e;margin-top:10px;font-weight:bold;">✅ Acesso VIP Liberado</div>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            Atualizado diariamente. © 2026 Palpites do Dia
-        </footer>
-    </div>
-
-    <script>
-        // TROCA A SENHA AQUI TODO DIA 👇
-        const SENHA_HOJE = "vip7maio"; 
-
-        // Data automática
-        const hoje = new Date();
-        const opcoes = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-        document.getElementById('dataHoje').textContent = hoje.toLocaleDateString('pt-PT', opcoes);
-
-        // Trocar abas
-        function mostrarTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-        }
-
-        // Função de desbloquear
-        function desbloquear(jogo) {
-            const senhaDigitada = document.getElementById('senha' + jogo).value.toLowerCase();
-            const erro = document.getElementById('erro' + jogo);
-            
-            if (senhaDigitada === SENHA_HOJE) {
-                document.getElementById('bloqueado' + jogo).style.display = 'none';
-                document.getElementById('desbloqueado' + jogo).style.display = 'block';
-            } else {
-                erro.style.display = 'block';
-                setTimeout(() => erro.style.display = 'none', 3000);
-            }
-        }
-    </script>
-</body>
-        </html>
+            margin: 20px 0; font
