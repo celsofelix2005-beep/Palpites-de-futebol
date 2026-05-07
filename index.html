@@ -8,73 +8,102 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background: #0f172a; color: #fff; padding: 20px; }
         .container { max-width: 700px; margin: 0 auto; }
-        header { text-align: center; margin-bottom: 30px; }
+        header { text-align: center; margin-bottom: 20px; }
         h1 { color: #22c55e; font-size: 2rem; margin-bottom: 5px; }
         .data { color: #94a3b8; font-size: 0.9rem; }
+        .tabs { display: flex; gap: 10px; margin: 20px 0; }
+        .tab-btn {
+            flex: 1; padding: 12px; border: none; border-radius: 8px;
+            font-weight: bold; cursor: pointer; font-size: 1rem;
+        }
+        .tab-gratis { background: #1e293b; color: #22c55e; border: 2px solid #22c55e; }
+        .tab-vip { background: #ca8a04; color: #0f172a; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
         .jogo {
             background: #1e293b; 
             border-left: 4px solid #22c55e;
-            border-radius: 8px; 
-            padding: 16px; 
-            margin-bottom: 16px;
+            border-radius: 8px; padding: 16px; margin-bottom: 16px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
+        .jogo.vip { border-left-color: #ca8a04; }
         .times { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
         .hora-liga { color: #94a3b8; font-size: 0.85rem; margin-bottom: 12px; }
         .palpite { 
-            background: #22c55e; 
-            color: #0f172a; 
-            display: inline-block;
-            padding: 6px 12px; 
-            border-radius: 20px; 
-            font-weight: bold;
-            font-size: 0.9rem;
+            background: #22c55e; color: #0f172a; display: inline-block;
+            padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;
         }
+        .palpite.vip { background: #ca8a04; }
         .analise { margin-top: 10px; font-size: 0.9rem; color: #cbd5e1; }
-        footer { text-align: center; margin-top: 40px; color: #64748b; font-size: 0.8rem; }
-        .aviso { 
-            background: #7f1d1d; 
-            padding: 12px; 
-            border-radius: 8px; 
-            margin: 20px 0; 
-            font-size: 0.85rem;
-            text-align: center;
+        .btn-whatsapp {
+            background: #25D366; color: #fff; padding: 12px; border-radius: 8px;
+            text-decoration: none; font-weight: bold; display: block; text-align: center;
+            margin-top: 12px;
         }
+        .aviso { 
+            background: #7f1d1d; padding: 12px; border-radius: 8px; 
+            margin: 20px 0; font-size: 0.85rem; text-align: center;
+        }
+        footer { text-align: center; margin-top: 40px; color: #64748b; font-size: 0.8rem; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Palpites do Dia</h1>
-            <div class="data" id="dataHoje">Quarta, 06 de Maio 2026</div>
+            <div class="data" id="dataHoje">quinta-feira, 7 de maio de 2026</div>
         </header>
 
         <div class="aviso">
             ⚠️ Aposte com responsabilidade. Palpites são apenas opiniões, não garantia de ganho. +18
         </div>
 
-        <!-- COPIA E COLA ESTE BLOCO PRA ADICIONAR MAIS JOGOS -->
-        <div class="jogo">
-            <div class="times">Real Madrid vs Barcelona</div>
-            <div class="hora-liga">21:00 | La Liga</div>
-            <div class="palpite">Palpite: Ambas Marcam - Sim</div>
-            <div class="analise">Clássico com média de 3 gols nos últimos 5 jogos. Defesas falhando.</div>
+        <div class="tabs">
+            <button class="tab-btn tab-gratis" onclick="mostrarTab('gratis')">Palpites Grátis</button>
+            <button class="tab-btn tab-vip" onclick="mostrarTab('vip')">Palpites VIP 💎</button>
         </div>
 
-        <div class="jogo">
-            <div class="times">Ferroviário Maputo vs Costa do Sol</div>
-            <div class="hora-liga">15:00 | Moçambola</div>
-            <div class="palpite">Palpite: Vitória Ferroviário</div>
-            <div class="analise">Ferroviário vem de 4 vitórias seguidas em casa. Costa do Sol fora é fraco.</div>
+        <!-- ABA PALPITES GRÁTIS -->
+        <div id="gratis" class="tab-content active">
+            <div class="jogo">
+                <div class="times">Real Madrid vs Barcelona</div>
+                <div class="hora-liga">21:00 | La Liga</div>
+                <div class="palpite">Palpite: Ambas Marcam - Sim</div>
+                <div class="analise">Clássico com média de 3 gols nos últimos 5 jogos. Defesas falhando.</div>
+            </div>
+
+            <div class="jogo">
+                <div class="times">Ferroviário Maputo vs Costa do Sol</div>
+                <div class="hora-liga">15:00 | Moçambola</div>
+                <div class="palpite">Palpite: Vitória Ferroviário</div>
+                <div class="analise">Ferroviário vem de 4 vitórias seguidas em casa. Costa do Sol fora é fraco.</div>
+            </div>
         </div>
-        
-        <div class="jogo">
-            <div class="times">Manchester City vs Arsenal</div>
-            <div class="hora-liga">17:30 | Premier League</div>
-            <div class="palpite">Palpite: Mais de 2.5 Gols</div>
-            <div class="analise">Dois ataques fortes. 8 dos últimos 10 jogos entre eles bateram over.</div>
+
+        <!-- ABA PALPITES VIP/PAGOS -->
+        <div id="vip" class="tab-content">
+            <div class="jogo vip">
+                <div class="times">Jogo VIP 1 - Odd 2.10</div>
+                <div class="hora-liga">Liga oculta | Análise completa</div>
+                <div class="palpite vip">🔒 Palpite Bloqueado</div>
+                <div class="analise">Jogo com 87% de taxa de acerto no nosso grupo VIP. Info exclusiva de desfalques.</div>
+                <a href="https://wa.me/25884XXXXXXX?text=Olá!%20Quero%20comprar%20o%20Palpite%20VIP%20de%20hoje.%20Qual%20o%20valor?" 
+                   class="btn-whatsapp" target="_blank">
+                   💰 Comprar Palpite VIP no WhatsApp
+                </a>
+            </div>
+
+            <div class="jogo vip">
+                <div class="times">Jogo VIP 2 - Odd 3.40</div>
+                <div class="hora-liga">Aposta de Valor | Stake alto</div>
+                <div class="palpite vip">🔒 Palpite Bloqueado</div>
+                <div class="analise">Entrada identificada pelos nossos analistas. Limite de 10 pessoas.</div>
+                <a href="https://wa.me/258852319663?text=Olá!%20Quero%20o%20acesso%20VIP%20completo%20de%20hoje" 
+                   class="btn-whatsapp" target="_blank">
+                   💎 Garantir Acesso VIP Completo
+                </a>
+            </div>
         </div>
-        <!-- FIM DO BLOCO PRA COPIAR -->
 
         <footer>
             Atualizado diariamente. © 2026 Palpites do Dia
@@ -82,10 +111,16 @@
     </div>
 
     <script>
-        // Atualiza a data automaticamente
+        // Data automática
         const hoje = new Date();
         const opcoes = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
         document.getElementById('dataHoje').textContent = hoje.toLocaleDateString('pt-PT', opcoes);
+
+        // Trocar abas
+        function mostrarTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+        }
     </script>
 </body>
 </html>
