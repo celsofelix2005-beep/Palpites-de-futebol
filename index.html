@@ -68,4 +68,137 @@
         .palpite-oculto { display: none; }
         .aviso { 
             background: #7f1d1d; padding: 12px; border-radius: 8px; 
-            margin: 20px 0; font
+            margin: 20px 0; font-size: 0.85rem; text-align: center;
+        }
+        footer { text-align: center; margin-top: 40px; color: #64748b; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="logo.png" alt="Palpites MZ" class="logo">
+            <h1>Palpites MZ</h1>
+            <div class="data" id="dataHoje">quinta-feira, 7 de maio de 2026</div>
+        </header>
+
+        <div class="aviso">
+            ⚠️ Aposte com responsabilidade. Palpites são apenas opiniões, não garantia de ganho. +18
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn tab-gratis" onclick="mostrarTab('gratis')">Palpites Grátis</button>
+            <button class="tab-btn tab-vip" onclick="mostrarTab('vip')">Palpites VIP 💎</button>
+        </div>
+
+        <!-- ABA PALPITES GRÁTIS -->
+        <div id="gratis" class="tab-content active">
+            <div class="jogo">
+                <div class="times">Ferroviário de Maputo vs Costa do Sol</div>
+                <div class="hora-liga">15:00 | Moçambola</div>
+                <div class="palpite">Palpite: Menos de 2.5 Gols</div>
+                <div class="analise">Clássico travado. 6 dos últimos 7 jogos tiveram 2 gols ou menos.</div>
+            </div>
+        </div>
+
+        <!-- ABA PALPITES VIP/PAGOS -->
+        <div id="vip" class="tab-content">
+            <div class="jogo vip">
+                <div class="times">Acesso VIP Diário</div>
+                <div class="hora-liga">Odds altas | 87% de acerto no mês</div>
+                
+                <!-- ÁREA BLOQUEADA -->
+                <div id="bloqueado1">
+                    <div class="palpite vip">🔒 Palpite Bloqueado</div>
+                    <div class="analise">Recebe 1-3 jogos premium por dia com análise completa. Vagas limitadas.</div>
+                    
+                    <div class="pagamento">
+                        <h3>💰 Valor do Acesso VIP:</h3>
+                        <div class="valor">100 MT ou 1.5 USDT</div>
+                        
+                        <h3>📱 Formas de Pagamento:</h3>
+                        
+                        <div class="metodo">
+                            <strong>1. M-Pesa</strong><br>
+                            Número: 852319663 - Nome: Celso F.
+                        </div>
+
+                        <div class="metodo">
+                            <strong>2. eMola</strong><br>
+                            Número: 860676062 - Nome: Celso F.
+                        </div>
+
+                        <div class="metodo">
+                            <strong>3. USDT - Rede TRC20</strong><br>
+                            Endereço: TXXX...XXX
+                        </div>
+
+                        <div class="metodo">
+                            <strong>4. Airtm</strong><br>
+                            Email: celsofelix2005@gmail.com
+                        </div>
+
+                        <p style="margin-top:12px;font-size:0.85rem;color:#94a3b8;">
+                            👉 Após pagar, clica no botão abaixo e envia o comprovante no WhatsApp pra receber a senha.
+                        </p>
+                    </div>
+
+                    <a href="https://wa.me/258860676062?text=Olá!%20Quero%20acesso%20VIP.%20Já%20fiz%20o%20pagamento." 
+                       class="btn-whatsapp" target="_blank">
+                       📲 Falar no WhatsApp
+                    </a>
+                    
+                    <div class="senha-box">
+                        <p>Recebeu a senha? Digite aqui pra desbloquear:</p>
+                        <input type="text" id="senha1" class="senha-input" placeholder="Senha do dia">
+                        <br>
+                        <button class="btn-desbloquear" onclick="desbloquear(1)">Desbloquear Palpite</button>
+                        <p id="erro1" style="color:#f87171;margin-top:8px;display:none;">Senha incorreta!</p>
+                    </div>
+                </div>
+
+                <!-- ÁREA QUE APARECE DEPOIS DA SENHA -->
+                <div id="desbloqueado1" class="palpite-oculto">
+                    <div class="palpite vip">Palpite: Manchester City -1.5 Handicap</div>
+                    <div class="analise">City com time completo em casa. Adversário sem 3 titulares. Odd 2.10 na 1xBet.</div>
+                    <div style="color:#22c55e;margin-top:10px;font-weight:bold;">✅ Acesso VIP Liberado</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            Atualizado diariamente. © 2026 Palpites MZ | +18 Jogue com responsabilidade
+        </footer>
+    </div>
+
+    <script>
+        // TROCA A SENHA E O ENDEREÇO USDT AQUI 👇
+        const SENHA_HOJE = "vip8maio"; 
+        // const ENDERECO_USDT = "TEU_ENDERECO_TRC20_AQUI"; 
+
+        // Data automática
+        const hoje = new Date();
+        const opcoes = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById('dataHoje').textContent = hoje.toLocaleDateString('pt-PT', opcoes);
+
+        // Trocar abas
+        function mostrarTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+        }
+
+        // Função de desbloquear
+        function desbloquear(jogo) {
+            const senhaDigitada = document.getElementById('senha' + jogo).value.toLowerCase();
+            const erro = document.getElementById('erro' + jogo);
+            
+            if (senhaDigitada === SENHA_HOJE) {
+                document.getElementById('bloqueado' + jogo).style.display = 'none';
+                document.getElementById('desbloqueado' + jogo).style.display = 'block';
+            } else {
+                erro.style.display = 'block';
+                setTimeout(() => erro.style.display = 'none', 3000);
+            }
+        }
+    </script>
+</body>
+    </html>
