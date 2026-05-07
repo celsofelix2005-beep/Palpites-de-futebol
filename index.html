@@ -40,6 +40,19 @@
             text-decoration: none; font-weight: bold; display: block; text-align: center;
             margin-top: 12px;
         }
+        .senha-box { 
+            background: #0f172a; border: 2px dashed #ca8a04; padding: 15px; 
+            border-radius: 8px; margin: 15px 0; text-align: center;
+        }
+        .senha-input { 
+            padding: 10px; border-radius: 6px; border: none; width: 60%; 
+            text-align: center; font-weight: bold; margin: 10px 0;
+        }
+        .btn-desbloquear {
+            background: #ca8a04; color: #0f172a; padding: 10px 20px; border: none;
+            border-radius: 6px; font-weight: bold; cursor: pointer;
+        }
+        .palpite-oculto { display: none; }
         .aviso { 
             background: #7f1d1d; padding: 12px; border-radius: 8px; 
             margin: 20px 0; font-size: 0.85rem; text-align: center;
@@ -71,13 +84,6 @@
                 <div class="palpite">Palpite: Ambas Marcam - Sim</div>
                 <div class="analise">Clássico com média de 3 gols nos últimos 5 jogos. Defesas falhando.</div>
             </div>
-
-            <div class="jogo">
-                <div class="times">Ferroviário Maputo vs Costa do Sol</div>
-                <div class="hora-liga">15:00 | Moçambola</div>
-                <div class="palpite">Palpite: Vitória Ferroviário</div>
-                <div class="analise">Ferroviário vem de 4 vitórias seguidas em casa. Costa do Sol fora é fraco.</div>
-            </div>
         </div>
 
         <!-- ABA PALPITES VIP/PAGOS -->
@@ -85,23 +91,32 @@
             <div class="jogo vip">
                 <div class="times">Jogo VIP 1 - Odd 2.10</div>
                 <div class="hora-liga">Liga oculta | Análise completa</div>
-                <div class="palpite vip">🔒 Palpite Bloqueado</div>
-                <div class="analise">Jogo com 87% de taxa de acerto no nosso grupo VIP. Info exclusiva de desfalques.</div>
-                <a href="https://wa.me/258852319663?text=Olá!%20Quero%20comprar%20o%20Palpite%20VIP%20de%20hoje.%20Qual%20o%20valor?" 
-                   class="btn-whatsapp" target="_blank">
-                   💰 Comprar Palpite VIP no WhatsApp
-                </a>
-            </div>
+                
+                <!-- ÁREA BLOQUEADA -->
+                <div id="bloqueado1">
+                    <div class="palpite vip">🔒 Palpite Bloqueado</div>
+                    <div class="analise">Jogo com 100% de taxa de acerto no nosso grupo VIP. Info exclusiva de desfalques.</div>
+                    
+                    <div class="senha-box">
+                        <p>Já pagou? Digite a senha enviada no WhatsApp:</p>
+                        <input type="text" id="senha1" class="senha-input" placeholder="Senha do dia">
+                        <br>
+                        <button class="btn-desbloquear" onclick="desbloquear(1)">Desbloquear Palpite</button>
+                        <p id="erro1" style="color:#f87171;margin-top:8px;display:none;">Senha incorreta!</p>
+                    </div>
 
-            <div class="jogo vip">
-                <div class="times">Jogo VIP 2 - Odd 3.40</div>
-                <div class="hora-liga">Aposta de Valor | Stake alto</div>
-                <div class="palpite vip">🔒 Palpite Bloqueado</div>
-                <div class="analise">Entrada identificada pelos nossos analistas. Limite de 10 pessoas.</div>
-                <a href="https://wa.me/258852319663?text=Olá!%20Quero%20o%20acesso%20VIP%20completo%20de%20hoje" 
-                   class="btn-whatsapp" target="_blank">
-                   💎 Garantir Acesso VIP Completo
-                </a>
+                    <a href="https://wa.me/258852319663?text=Olá!%20Quero%20comprar%20o%20Palpite%20VIP%20de%20hoje.%20Qual%20o%20valor?" 
+                       class="btn-whatsapp" target="_blank">
+                       💰 Comprar Palpite VIP no WhatsApp
+                    </a>
+                </div>
+
+                <!-- ÁREA QUE APARECE DEPOIS DA SENHA -->
+                <div id="desbloqueado1" class="palpite-oculto">
+                    <div class="palpite vip">Palpite: Manchester City -1.5 Handicap</div>
+                    <div class="analise">City em casa é imbatível. Adversário sem 3 titulares. Odd 2.10 na 1xBet.</div>
+                    <div style="color:#22c55e;margin-top:10px;font-weight:bold;">✅ Acesso VIP Liberado</div>
+                </div>
             </div>
         </div>
 
@@ -111,6 +126,9 @@
     </div>
 
     <script>
+        // TROCA A SENHA AQUI TODO DIA 👇
+        const SENHA_HOJE = "vip7maio"; 
+
         // Data automática
         const hoje = new Date();
         const opcoes = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
@@ -121,6 +139,20 @@
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.getElementById(tab).classList.add('active');
         }
+
+        // Função de desbloquear
+        function desbloquear(jogo) {
+            const senhaDigitada = document.getElementById('senha' + jogo).value.toLowerCase();
+            const erro = document.getElementById('erro' + jogo);
+            
+            if (senhaDigitada === SENHA_HOJE) {
+                document.getElementById('bloqueado' + jogo).style.display = 'none';
+                document.getElementById('desbloqueado' + jogo).style.display = 'block';
+            } else {
+                erro.style.display = 'block';
+                setTimeout(() => erro.style.display = 'none', 3000);
+            }
+        }
     </script>
 </body>
-</html>
+        </html>
