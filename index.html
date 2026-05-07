@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palpites do Dia - Futebol</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background: #0f172a; color: #fff; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { color: #22c55e; font-size: 2rem; margin-bottom: 5px; }
+        .data { color: #94a3b8; font-size: 0.9rem; }
+        .jogo {
+            background: #1e293b; 
+            border-left: 4px solid #22c55e;
+            border-radius: 8px; 
+            padding: 16px; 
+            margin-bottom: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .times { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
+        .hora-liga { color: #94a3b8; font-size: 0.85rem; margin-bottom: 12px; }
+        .palpite { 
+            background: #22c55e; 
+            color: #0f172a; 
+            display: inline-block;
+            padding: 6px 12px; 
+            border-radius: 20px; 
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .analise { margin-top: 10px; font-size: 0.9rem; color: #cbd5e1; }
+        footer { text-align: center; margin-top: 40px; color: #64748b; font-size: 0.8rem; }
+        .aviso { 
+            background: #7f1d1d; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin: 20px 0; 
+            font-size: 0.85rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Palpites do Dia</h1>
+            <div class="data" id="dataHoje">Quarta, 06 de Maio 2026</div>
+        </header>
+
+        <div class="aviso">
+            ⚠️ Aposte com responsabilidade. Palpites são apenas opiniões, não garantia de ganho. +18
+        </div>
+
+        <!-- COPIA E COLA ESTE BLOCO PRA ADICIONAR MAIS JOGOS -->
+        <div class="jogo">
+            <div class="times">Real Madrid vs Barcelona</div>
+            <div class="hora-liga">21:00 | La Liga</div>
+            <div class="palpite">Palpite: Ambas Marcam - Sim</div>
+            <div class="analise">Clássico com média de 3 gols nos últimos 5 jogos. Defesas falhando.</div>
+        </div>
+
+        <div class="jogo">
+            <div class="times">Ferroviário Maputo vs Costa do Sol</div>
+            <div class="hora-liga">15:00 | Moçambola</div>
+            <div class="palpite">Palpite: Vitória Ferroviário</div>
+            <div class="analise">Ferroviário vem de 4 vitórias seguidas em casa. Costa do Sol fora é fraco.</div>
+        </div>
+        
+        <div class="jogo">
+            <div class="times">Manchester City vs Arsenal</div>
+            <div class="hora-liga">17:30 | Premier League</div>
+            <div class="palpite">Palpite: Mais de 2.5 Gols</div>
+            <div class="analise">Dois ataques fortes. 8 dos últimos 10 jogos entre eles bateram over.</div>
+        </div>
+        <!-- FIM DO BLOCO PRA COPIAR -->
+
+        <footer>
+            Atualizado diariamente. © 2026 Palpites do Dia
+        </footer>
+    </div>
+
+    <script>
+        // Atualiza a data automaticamente
+        const hoje = new Date();
+        const opcoes = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById('dataHoje').textContent = hoje.toLocaleDateString('pt-PT', opcoes);
+    </script>
+</body>
+</html>
