@@ -12,14 +12,15 @@
         .logo { width: 120px; margin: 0 auto 10px; display: block; }
         h1 { color: #22c55e; font-size: 1.8rem; margin-bottom: 5px; }
         .data { color: #94a3b8; font-size: 0.9rem; }
-        .tabs { display: flex; gap: 8px; margin: 20px 0; flex-wrap: wrap; }
+        .tabs { display: flex; gap: 6px; margin: 20px 0; flex-wrap: wrap; }
         .tab-btn {
-            flex: 1; padding: 12px 8px; border: none; border-radius: 8px;
-            font-weight: bold; cursor: pointer; font-size: 0.9rem; min-width: 100px;
+            flex: 1; padding: 10px 6px; border: none; border-radius: 8px;
+            font-weight: bold; cursor: pointer; font-size: 0.85rem; min-width: 80px;
         }
         .tab-gratis { background: #1e293b; color: #22c55e; border: 2px solid #22c55e; }
         .tab-vip-dia { background: #ca8a04; color: #0f172a; }
         .tab-vip-semana { background: #7c3aed; color: #fff; }
+        .tab-resultados { background: #0ea5e9; color: #0f172a; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         .jogo {
@@ -30,6 +31,7 @@
         }
         .jogo.vip-dia { border-left-color: #ca8a04; }
         .jogo.vip-semana { border-left-color: #7c3aed; }
+        .jogo.resultado { border-left-color: #0ea5e9; }
         .times { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
         .hora-liga { color: #94a3b8; font-size: 0.85rem; margin-bottom: 12px; }
         .palpite { 
@@ -38,6 +40,8 @@
         }
         .palpite.vip-dia { background: #ca8a04; }
         .palpite.vip-semana { background: #7c3aed; color: #fff; }
+        .status-green { background: #16a34a; color: #fff; }
+        .status-red { background: #dc2626; color: #fff; }
         .analise { margin-top: 10px; font-size: 0.9rem; color: #cbd5e1; }
         .btn-whatsapp {
             background: #25D366; color: #fff; padding: 12px; border-radius: 8px;
@@ -80,6 +84,11 @@
             background: #16a34a; color: #fff; padding: 4px 8px; border-radius: 4px;
             font-size: 0.75rem; font-weight: bold; margin-left: 8px;
         }
+        .resumo-resultados {
+            background: #0f172a; border: 2px solid #0ea5e9; padding: 12px;
+            border-radius: 8px; margin-bottom: 16px; text-align: center;
+        }
+        .resumo-resultados span { margin: 0 8px; font-weight: bold; }
         footer { text-align: center; margin-top: 40px; color: #64748b; font-size: 0.8rem; }
     </style>
 </head>
@@ -99,6 +108,7 @@
             <button class="tab-btn tab-gratis" onclick="mostrarTab('gratis')">Grátis</button>
             <button class="tab-btn tab-vip-dia" onclick="mostrarTab('vip-dia')">VIP Diário</button>
             <button class="tab-btn tab-vip-semana" onclick="mostrarTab('vip-semana')">VIP Semanal</button>
+            <button class="tab-btn tab-resultados" onclick="mostrarTab('resultados')">Resultados</button>
         </div>
 
         <!-- ABA PALPITES GRÁTIS -->
@@ -123,41 +133,29 @@
                     
                     <div class="pagamento">
                         <h3>💰 Valor Acesso Diário:</h3>
-                        <div class="valor">100 MT ou 1.5 USDT</div>
+                        <div class="valor">99 MT ou 1.5 USDT</div>
                         
                         <div class="metodos">
-                            <strong>📱 Formas de Pagamento Aceitas:</strong>
-                            <ul>
-                                <li>M-Pesa</li>
-                                <li>eMola</li>
-                                <li>USDT - Rede TRC20</li>
-                                <li>Airtm</li>
-                            </ul>
+                            <strong>📱 Formas de Pagamento:</strong>
+                            <ul><li>M-Pesa</li><li>eMola</li><li>USDT TRC20</li><li>Airtm</li></ul>
                         </div>
-
-                        <p style="margin-top:12px;font-size:0.85rem;color:#94a3b8;">
-                            👉 Clica abaixo, faz o pagamento e envia o comprovante no WhatsApp pra receber a senha.
-                        </p>
                     </div>
 
-                    <a href="https://wa.me/258860676062?text=Olá!%20Quero%20VIP%20Diário.%20Me%20envia%20os%20dados%20de%20pagamento." 
-                       class="btn-whatsapp" target="_blank">
-                       📲 Solicitar Dados de Pagamento
-                    </a>
+                    <a href="https://wa.me/258860676062?text=Olá!%20Quero%20VIP%20Diário.%20Me%20envia%20os%20dados." 
+                       class="btn-whatsapp" target="_blank">📲 Solicitar Dados no WhatsApp</a>
                     
                     <div class="senha-box">
                         <p>Recebeu a senha? Digite aqui:</p>
                         <input type="text" id="senha-dia" class="senha-input" placeholder="Senha do dia">
                         <br>
-                        <button class="btn-desbloquear" onclick="desbloquear('dia')">Desbloquear Palpite</button>
+                        <button class="btn-desbloquear" onclick="desbloquear('dia')">Desbloquear</button>
                         <p id="erro-dia" style="color:#f87171;margin-top:8px;display:none;">Senha incorreta!</p>
                     </div>
                 </div>
 
                 <div id="desbloqueado-dia" class="palpite-oculto">
                     <div class="palpite vip-dia">Palpite: Manchester City -1.5 Handicap</div>
-                    <div class="analise">City com time completo em casa. Adversário sem 3 titulares. Odd 2.10 na 1xBet.</div>
-                    <div style="color:#22c55e;margin-top:10px;font-weight:bold;">✅ Acesso VIP Liberado por 24h</div>
+                    <div class="analise">City com time completo em casa. Odd 2.10 na 1xBet.</div>
                 </div>
             </div>
         </div>
@@ -166,53 +164,72 @@
         <div id="vip-semana" class="tab-content">
             <div class="jogo vip-semana">
                 <div class="times">Acesso VIP Semanal <span class="badge-economia">ECONOMIZA 200 MT</span></div>
-                <div class="hora-liga">7 dias de palpites | 10-15 jogos | Odds 1.80+</div>
+                <div class="hora-liga">7 dias | 10-15 jogos | Odds 4.00+</div>
                 
                 <div id="bloqueado-semana">
                     <div class="palpite vip-semana">🔒 Palpites Bloqueados</div>
-                    <div class="analise">Acesso a todos os jogos premium da semana. Análises diárias + grupo exclusivo.</div>
+                    <div class="analise">Acesso a todos os jogos premium da semana + grupo exclusivo.</div>
                     
                     <div class="pagamento">
                         <h3>💰 Valor Acesso Semanal:</h3>
-                        <div class="valor">500 MT ou 7.5 USDT</div>
+                        <div class="valor">499 MT ou 7.5 USDT</div>
                         
                         <div class="metodos">
-                            <strong>📱 Formas de Pagamento Aceitas:</strong>
-                            <ul>
-                                <li>M-Pesa</li>
-                                <li>eMola</li>
-                                <li>USDT - Rede TRC20</li>
-                                <li>Airtm</li>
-                            </ul>
+                            <strong>📱 Formas de Pagamento:</strong>
+                            <ul><li>M-Pesa</li><li>eMola</li><li>USDT TRC20</li><li>Airtm</li></ul>
                         </div>
-
-                        <p style="margin-top:12px;font-size:0.85rem;color:#94a3b8;">
-                            👉 Clica abaixo, faz o pagamento e envia o comprovante no WhatsApp pra receber a senha da semana.
-                        </p>
                     </div>
 
-                    <a href="https://wa.me/258860676062?text=Olá!%20Quero%20VIP%20Semanal.%20Me%20envia%20os%20dados%20de%20pagamento." 
-                       class="btn-whatsapp" target="_blank">
-                       📲 Solicitar Dados de Pagamento
-                    </a>
+                    <a href="https://wa.me/258860676062?text=Olá!%20Quero%20VIP%20Semanal.%20Me%20envia%20os%20dados." 
+                       class="btn-whatsapp" target="_blank">📲 Solicitar Dados no WhatsApp</a>
                     
                     <div class="senha-box semana">
                         <p>Recebeu a senha da semana? Digite aqui:</p>
                         <input type="text" id="senha-semana" class="senha-input" placeholder="Senha da semana">
                         <br>
-                        <button class="btn-desbloquear semana" onclick="desbloquear('semana')">Desbloquear Palpites</button>
+                        <button class="btn-desbloquear semana" onclick="desbloquear('semana')">Desbloquear</button>
                         <p id="erro-semana" style="color:#f87171;margin-top:8px;display:none;">Senha incorreta!</p>
                     </div>
                 </div>
 
                 <div id="desbloqueado-semana" class="palpite-oculto">
                     <div class="palpite vip-semana">Palpite 1: Real Madrid vence</div>
-                    <div class="analise">Odd 1.90 | Time completo, joga em casa.</div>
-                    <br>
-                    <div class="palpite vip-semana">Palpite 2: Bayern +1.5 Gols</div>
-                    <div class="analise">Odd 1.85 | Ataque em grande fase.</div>
-                    <div style="color:#a78bfa;margin-top:10px;font-weight:bold;">✅ Acesso VIP Liberado por 7 dias</div>
+                    <div class="analise">Odd 1.90 | Time completo.</div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ABA RESULTADOS -->
+        <div id="resultados" class="tab-content">
+            <div class="resumo-resultados">
+                <strong>Resultados de Ontem - 06/05/2026</strong><br>
+                <span style="color:#22c55e;">✅ Greens: 5</span> | 
+                <span style="color:#dc2626;">❌ Reds: 1</span> | 
+                <span style="color:#22c55e;">Acerto: 83%</span>
+            </div>
+
+            <!-- RESULTADO GRÁTIS -->
+            <div class="jogo resultado">
+                <div class="times">Benfica vs Porto</div>
+                <div class="hora-liga">Ontem | Grátis</div>
+                <div class="palpite status-green">✅ Green: Ambas Marcam</div>
+                <div class="analise">Resultado: 2-1. Bateu fácil.</div>
+            </div>
+
+            <!-- RESULTADO VIP DIÁRIO -->
+            <div class="jogo resultado">
+                <div class="times">Barcelona vs Real Madrid</div>
+                <div class="hora-liga">Ontem | VIP Diário</div>
+                <div class="palpite status-green">✅ Green: +2.5 Gols</div>
+                <div class="analise">Resultado: 3-2. Odd 1.95. Lucro.</div>
+            </div>
+
+            <!-- RESULTADO VIP SEMANAL -->
+            <div class="jogo resultado">
+                <div class="times">Liverpool vs Arsenal</div>
+                <div class="hora-liga">Ontem | VIP Semanal</div>
+                <div class="palpite status-red">❌ Red: Liverpool -1</div>
+                <div class="analise">Resultado: 1-1. Por pouco não bateu.</div>
             </div>
         </div>
 
